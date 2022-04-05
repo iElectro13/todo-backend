@@ -39,6 +39,16 @@ router.put("/tasks/update/:id", (request, response) => {
     .catch((err) => response.json(err));
 });
 
+//Check task
+router.put("/tasks/check/:id", (request, response) => {
+    const { id } = request.params;
+    const task = taskSchema.findById(id)
+    taskSchema
+    .updateOne({_id:id}, {$set: {isDone: !task.isDone}})
+    .then((data) => response.json(data))
+    .catch((err) => response.json(err));
+});
+
 //Delete task by id
 router.delete("/tasks/delete/:id", (request, response) => {
     const { id } = request.params;
